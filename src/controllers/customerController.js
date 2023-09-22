@@ -139,6 +139,60 @@ const customerController = {
 				return responseError(res, 500, error.message);
 			});
 	},
+
+	updateCustomer: async (req, res) => {
+		try {
+			const id = req.params.id;
+			const { name, email, phone, gender, date_birth, role } = req.body;
+
+			const { rowCount: rowCountEmail } = await customerModel.findEmailCustomer(
+				email,
+			);
+			if (rowCountEmail) {
+				return responseError(res, 400, "Email already taken.");
+			}
+
+			const uploadToCloudinary = await cloudinary.uploader.upload(
+				req?.file?.path,
+				{
+					folder: "blanja/customer",
+				},
+			);
+
+			if (!uploadToCloudinary) {
+				return responseError(res, 400, "Upload image failed");
+			}
+			const imageUrl = uploadToCloudinary.secure_url;
+
+			const { rowCount, rows } = await customerModel.selectCustomer(id);
+			if (!rowCount) {
+				return responseError(res, 404, "Customer id is not found");
+			}
+
+			const currentCustomer = rows[0];
+			const data = {
+				id,
+				name: name ?? currentCustomer?.name,
+				email: email ?? currentCustomer?.email,
+				phone: phone ?? currentCustomer?.phone,
+				gender: gender ?? currentCustomer?.gender,
+				date_birth: date_birth ?? currentCustomer?.date_birth,
+				photo: imageUrl ?? currentCustomer?.photo,
+				role: role ?? currentCustomer?.role,
+			};
+
+			customerModel
+				.updateCustomer(data)
+				.then(() => {
+					return response(res, data, 200, "Update customer success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error);
+				});
+		} catch (error) {
+			return responseError(res, 500, error);
+		}
+	},
 };
 
 module.exports = customerController;
