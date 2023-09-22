@@ -18,7 +18,7 @@ const insertCustomer = (data) => {
 	const { name, email, password, phone, gender, photo, date_birth, role } = data;
 
 	return db.query(
-		`INSERT INTO customer (name,email,password,phone,gender,photo,date_birth,role) VALUES( '${name}', '${email}', '${password}', '${phone}','${gender}', '${photo}', '${date_birth}', '${role}')`,
+		`INSERT INTO customer (name,email,password,phone,gender,photo,date_birth,role) VALUES( '${name}', '${email}', '${password}', '${phone}','${gender}', '${photo}', '${date_birth}', ${role})`,
 	);
 };
 
