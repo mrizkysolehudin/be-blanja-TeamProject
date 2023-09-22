@@ -10,7 +10,7 @@ const selectAllcustomers = (search, sort, limit, offset) => {
 	`);
 };
 
-const selectCustomerId = (id) => {
+const selectCustomer = (id) => {
 	return db.query(`SELECT * FROM customer WHERE id=${id}`);
 };
 
@@ -44,7 +44,7 @@ const countDataCustomer = () => {
 
 module.exports = {
 	selectAllcustomers,
-	selectCustomerId,
+	selectCustomer,
 	insertCustomer,
 	updateCustomer,
 	deleteCustomer,

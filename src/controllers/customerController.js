@@ -28,7 +28,42 @@ const customerController = {
 		customerModel
 			.selectAllcustomers(search, sort, limit, offset)
 			.then((result) => {
-				return response(res, result.rows, 200, "get customers success", pagination);
+				return response(res, result.rows, 200, "Get customers success", pagination);
+			})
+			.catch((error) => {
+				return responseError(res, 500, error.message);
+			});
+	},
+
+	getCustomer: async (req, res) => {
+		const id = req.params.id;
+		customerModel
+			.selectCustomer(id)
+			.then((result) => {
+				let { rowCount } = result;
+				if (!rowCount) {
+					return responseError(res, 404, "Customer id is not found");
+				}
+
+				return response(res, result.rows, 200, "Get customer success");
+			})
+			.catch((error) => {
+				return responseError(res, 500, error.message);
+			});
+	},
+
+	deleteCustomer: async (req, res) => {
+		const id = req.params.id;
+
+		const { rowCount } = await customerModel.selectCustomer(id);
+		if (!rowCount) {
+			return responseError(res, 404, "Customer id is not found");
+		}
+
+		customerModel
+			.deleteCustomer(id)
+			.then(() => {
+				return response(res, null, 200, "Delete customer success");
 			})
 			.catch((error) => {
 				return responseError(res, 500, error.message);
