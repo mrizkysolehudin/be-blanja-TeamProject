@@ -41,7 +41,7 @@ const multerUpload = multer({
 	},
 });
 
-const uploadImageRecipe = (req, res, next) => {
+const uploadImage = (req, res, next) => {
 	const multerSingle = multerUpload.single("image");
 
 	multerSingle(req, res, (err) => {
@@ -65,4 +65,4 @@ const uploadPhotoProfile = (req, res, next) => {
 	});
 };
 
-module.exports = { uploadImageRecipe, uploadPhotoProfile };
+module.exports = { uploadImage, uploadPhotoProfile };
