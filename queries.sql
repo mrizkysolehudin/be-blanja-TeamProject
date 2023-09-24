@@ -28,3 +28,20 @@ CREATE TABLE
 ALTER TABLE seller add role INT;
 
 SELECT seller.id, seller.email FROM seller WHERE email='b';
+
+CREATE TABLE
+    product (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255),
+        image VARCHAR(255),
+        price INT,
+        color VARCHAR(255),
+        size VARCHAR(255),
+        stock INT,
+        rating VARCHAR(255),
+        condition VARCHAR(255),
+        description TEXT,
+        seller_id INT,
+        category_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )

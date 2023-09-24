@@ -145,10 +145,14 @@ const customerController = {
 			const id = req.params.id;
 			const { name, email, phone, gender, date_birth, role } = req.body;
 
-			const { rowCount: rowCountEmail } = await customerModel.findEmailCustomer(
-				email,
-			);
-			if (rowCountEmail) {
+			const { rowCount, rows } = await customerModel.selectCustomer(id);
+			if (!rowCount) {
+				return responseError(res, 404, "Customer id is not found");
+			}
+
+			const { rowCount: rowCountEmail, rows: rowsEmail } =
+				await customerModel.findEmailCustomer(email);
+			if (rowCountEmail && id != rowsEmail[0].id) {
 				return responseError(res, 400, "Email already taken.");
 			}
 
@@ -163,11 +167,6 @@ const customerController = {
 				return responseError(res, 400, "Upload image failed");
 			}
 			const imageUrl = uploadToCloudinary.secure_url;
-
-			const { rowCount, rows } = await customerModel.selectCustomer(id);
-			if (!rowCount) {
-				return responseError(res, 404, "Customer id is not found");
-			}
 
 			const currentCustomer = rows[0];
 			const data = {
