@@ -86,3 +86,19 @@ SET
     category_id = 3 
 WHERE 
     id = 2;
+
+
+CREATE TABLE
+    category (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(50),
+        image VARCHAR(255)
+    );
+
+INSERT INTO category (
+  name,
+  image
+) VALUES (
+  'Electronics',
+  ''
+  );
