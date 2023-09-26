@@ -141,7 +141,17 @@ const sellerController = {
 				sellerData.token = token;
 				sellerData.refreshToken = refreshToken;
 
-				return response(res, sellerData, 200, "Login success");
+				return res
+					.status(200)
+					.cookie("refreshToken", refreshToken, {
+						// httpOnly: true,
+						sameSite: "none",
+						secure: true,
+					})
+					.json({
+						message: "Login success",
+						data: sellerData,
+					});
 			})
 			.catch((error) => {
 				return responseError(res, 500, error.message);

@@ -133,7 +133,17 @@ const customerController = {
 				customerData.token = token;
 				customerData.refreshToken = refreshToken;
 
-				return response(res, customerData, 200, "Login success");
+				return res
+					.status(200)
+					.cookie("refreshToken", refreshToken, {
+						// httpOnly: true,
+						sameSite: "none",
+						secure: true,
+					})
+					.json({
+						message: "Login success",
+						data: customerData,
+					});
 			})
 			.catch((error) => {
 				return responseError(res, 500, error.message);
