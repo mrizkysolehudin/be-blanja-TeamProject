@@ -166,19 +166,22 @@ const customerController = {
 				return responseError(res, 400, "Email already taken.");
 			}
 
-			const uploadToCloudinary = await cloudinary.uploader.upload(
-				req?.file?.path,
-				{
-					folder: "blanja/customer",
-				},
-			);
-
-			if (!uploadToCloudinary) {
-				return responseError(res, 400, "Upload image failed");
-			}
-			const imageUrl = uploadToCloudinary.secure_url;
-
 			const currentCustomer = rows[0];
+			let imageUrl = currentCustomer?.photo ?? "";
+			if (req.file) {
+				const uploadToCloudinary = await cloudinary.uploader.upload(
+					req?.file?.path,
+					{
+						folder: "blanja/customer",
+					},
+				);
+
+				if (!uploadToCloudinary) {
+					return responseError(res, 400, "upload image failed");
+				}
+				imageUrl = uploadToCloudinary?.secure_url ?? "";
+			}
+
 			const data = {
 				id,
 				name: name ?? currentCustomer?.name,
@@ -186,7 +189,7 @@ const customerController = {
 				phone: phone ?? currentCustomer?.phone,
 				gender: gender ?? currentCustomer?.gender,
 				date_birth: date_birth ?? currentCustomer?.date_birth,
-				photo: imageUrl ?? currentCustomer?.photo,
+				photo: imageUrl,
 				role: role ?? currentCustomer?.role,
 			};
 

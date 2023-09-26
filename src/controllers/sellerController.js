@@ -174,25 +174,28 @@ const sellerController = {
 				return responseError(res, 400, "Email already taken.");
 			}
 
-			const uploadToCloudinary = await cloudinary.uploader.upload(
-				req?.file?.path,
-				{
-					folder: "blanja/seller",
-				},
-			);
+			const currentCustomer = rows[0];
+			let imageUrl = currentCustomer?.photo ?? "";
+			if (req.file) {
+				const uploadToCloudinary = await cloudinary.uploader.upload(
+					req?.file?.path,
+					{
+						folder: "blanja/seller",
+					},
+				);
 
-			if (!uploadToCloudinary) {
-				return responseError(res, 400, "Upload image failed");
+				if (!uploadToCloudinary) {
+					return responseError(res, 400, "upload image failed");
+				}
+				imageUrl = uploadToCloudinary?.secure_url ?? "";
 			}
-			const imageUrl = uploadToCloudinary.secure_url;
 
-			const currentSeller = rows[0];
 			const data = {
 				id,
 				name: name ?? currentSeller?.name,
 				email: email ?? currentSeller?.email,
 				phone: phone ?? currentSeller?.phone,
-				photo: imageUrl ?? currentSeller?.photo,
+				photo: imageUrl,
 				store_name: store_name ?? currentSeller?.store_name,
 				store_description: store_description ?? currentSeller?.store_description,
 				role: role ?? currentSeller?.role,
