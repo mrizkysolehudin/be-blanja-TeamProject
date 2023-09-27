@@ -21,7 +21,7 @@ app.use(xss());
 app.use(cookieParser());
 
 // routers
-app.use("/api", allRouters);
+app.use(allRouters);
 
 app.listen(PORT, () => {
 	console.log(`Server berjalan di PORT: ${PORT}`);
