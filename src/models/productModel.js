@@ -5,7 +5,7 @@ const selectAllProducts = (search, sort, limit, offset) => {
 	SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
 	FROM product
 	JOIN seller ON product.seller_id = seller.id 
-	WHERE product.name LIKE '%${search}%'
+	WHERE product.name ILIKE '%${search}%'
 	ORDER BY product.name ${sort}
 	LIMIT ${limit}
 	OFFSET ${offset}; 
