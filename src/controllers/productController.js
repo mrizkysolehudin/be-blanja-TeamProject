@@ -1,7 +1,5 @@
 const productModel = require("../models/productModel.js");
 const { response, responseError } = require("../helpers/response.js");
-const bcrypt = require("bcryptjs");
-const { generateToken, generateRefreshToken } = require("../helpers/jwt.js");
 const cloudinary = require("../helpers/cloudinary.js");
 
 const productController = {
@@ -13,7 +11,11 @@ const productController = {
 		let limit = parseInt(req.query.limit) || 10;
 		let offset = (page - 1) * limit;
 
-		const resultCount = await productModel.countDataProduct();
+		const resultCount = await productModel.countDataProduct(
+			search,
+			limit,
+			offset,
+		);
 		const { count } = resultCount.rows[0];
 
 		const totalData = parseInt(count);

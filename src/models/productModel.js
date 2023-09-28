@@ -86,8 +86,14 @@ const deleteProduct = (id) => {
 	return db.query(`DELETE FROM product WHERE id=${id}`);
 };
 
-const countDataProduct = () => {
-	return db.query("SELECT COUNT(*) FROM product");
+const countDataProduct = (search, limit, offset) => {
+	return db.query(`SELECT COUNT(*) 
+	FROM product 
+	JOIN seller ON product.seller_id = seller.id 
+	WHERE product.name ILIKE '%${search}%'
+	LIMIT ${limit}
+	OFFSET ${offset}; 
+	`);
 };
 
 module.exports = {
