@@ -123,6 +123,7 @@ const customerController = {
 				const customerData = {
 					id: customer?.id,
 					email: customer?.email,
+					role: customer?.role,
 				};
 
 				const payload = {
