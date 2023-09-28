@@ -9,10 +9,6 @@ const allRouters = require("./src/routers/index");
 const PORT = 5000;
 const app = express();
 
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Credentials", "true");
-	next();
-});
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
