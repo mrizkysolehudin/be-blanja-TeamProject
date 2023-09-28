@@ -11,11 +11,7 @@ const productController = {
 		let limit = parseInt(req.query.limit) || 10;
 		let offset = (page - 1) * limit;
 
-		const resultCount = await productModel.countDataProduct(
-			search,
-			limit,
-			offset,
-		);
+		const resultCount = await productModel.countDataProduct(search);
 		const { count } = resultCount.rows[0];
 
 		const totalData = parseInt(count);
