@@ -94,6 +94,24 @@ const countDataProduct = (search) => {
 	`);
 };
 
+const selectProductsUserByUserId = (id) => {
+	return db.query(`
+	SELECT
+	product.id,
+	product.name AS product_name,
+	product.image,
+	seller.name AS owner,
+	seller.store_name,
+	TO_CHAR(product.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at
+FROM
+    product
+JOIN
+	seller ON product.seller_id = seller.id
+WHERE
+	seller.id = ${id};
+	`);
+};
+
 module.exports = {
 	selectAllProducts,
 	selectProduct,
@@ -101,4 +119,5 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	countDataProduct,
+	selectProductsUserByUserId,
 };

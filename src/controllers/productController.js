@@ -1,4 +1,5 @@
 const productModel = require("../models/productModel.js");
+const sellerModel = require("../models/sellerModel.js");
 const { response, responseError } = require("../helpers/response.js");
 const cloudinary = require("../helpers/cloudinary.js");
 
@@ -182,6 +183,28 @@ const productController = {
 				});
 		} catch (error) {
 			return responseError(res, 500, error);
+		}
+	},
+
+	getProductsUserByUserId: async (req, res) => {
+		try {
+			const id = req.params.id;
+
+			const { rowCount } = await sellerModel.selectSeller(id);
+			if (!rowCount) {
+				return responseError(res, 404, "User id is not found");
+			}
+
+			productModel
+				.selectProductsUserByUserId(id)
+				.then((result) => {
+					return response(res, result.rows, 200, "get user products success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error.message);
+				});
+		} catch (error) {
+			return responseError(res, 500, error.message);
 		}
 	},
 };
