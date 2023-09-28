@@ -131,6 +131,7 @@ const sellerController = {
 				const sellerData = {
 					id: seller?.id,
 					email: seller?.email,
+					role: seller?.role,
 				};
 
 				const payload = {
