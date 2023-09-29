@@ -13,7 +13,10 @@ const selectAllProducts = (search, sort, limit, offset) => {
 };
 
 const selectProduct = (id) => {
-	return db.query(`SELECT * FROM product WHERE id=${id}`);
+	return db.query(`SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
+	FROM product
+	JOIN seller ON product.seller_id = seller.id  
+	WHERE id=${id}`);
 };
 
 const insertProduct = (data) => {
