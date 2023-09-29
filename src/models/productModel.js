@@ -16,7 +16,7 @@ const selectProduct = (id) => {
 	return db.query(`SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
 	FROM product
 	JOIN seller ON product.seller_id = seller.id  
-	WHERE id=${id}`);
+	WHERE product.id=${id}`);
 };
 
 const insertProduct = (data) => {
