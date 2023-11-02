@@ -1,8 +1,11 @@
 const db = require("../configs/db.js");
 
-const selectAllOrderItems = () => {
+const selectAllOrderItems = (limit, offset) => {
 	return db.query(`
-	SELECT * FROM order_Items 
+	SELECT order_items.*, product.name AS product_name FROM order_Items 
+	JOIN product ON order_items.product_id = product.id
+	LIMIT ${limit}
+	OFFSET ${offset}; 
 	`);
 };
 
@@ -36,6 +39,7 @@ const countDataOrderItem = () => {
 
 module.exports = {
 	selectAllOrderItems,
+	// pending
 	selectOrderItem,
 	insertOrderItem,
 	updateOrderItem,

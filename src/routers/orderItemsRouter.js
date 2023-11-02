@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const ordersController = require("../controllers/ordersController.js");
+const orderItemsController = require("../controllers/orderItemsController.js");
 const { uploadImage } = require("../middlewares/uploadImage.js");
 
-router.get("/", ordersController.getAllOrders);
+router.get("/", orderItemsController.getAllOrderItems);
 // router.get("/:id", ordersController.getCategory);
 // router.delete("/:id", ordersController.deleteCategory);
-router.post("/", ordersController.createOrder);
 // router.put("/:id", uploadImage, ordersController.updateCategory);
 
 module.exports = router;

@@ -6,6 +6,15 @@ const selectAllOrders = () => {
 	`);
 };
 
+// const selectAllOrdersWithOrderItems = () => {
+// 	return db.query(`
+// 		SELECT o.*, oi.*, p.product_name
+// 		FROM orders o
+// 		LEFT JOIN order_items oi ON o.order_id = oi.order_id
+// 		LEFT JOIN products p ON oi.product_id = p.product_id
+// 	`);
+// };
+
 const selectOrder = (id) => {
 	return db.query(`SELECT * FROM orders WHERE id=${id}`);
 };
