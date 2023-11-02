@@ -46,6 +46,27 @@ CREATE TABLE
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
 
+CREATE TABLE
+    orders (
+        id SERIAL PRIMARY KEY,
+        order_id VARCHAR(255),
+        order_total VARCHAR(255),
+        payment_method VARCHAR(255),
+        address_id INT,
+        customer_id INT,
+        seller_id INT,
+        order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+
+CREATE TABLE order_items (
+    order_item_id SERIAL PRIMARY KEY,
+    order_id VARCHAR(255),
+    product_id INT,
+    quantity_unit INT,
+    price_unit INT
+);
+
+
 INSERT INTO product (
   name,
   image,
@@ -117,3 +138,9 @@ JOIN
 	seller ON product.seller_id = seller.id
 WHERE
 	seller.id = 5; 
+
+
+    SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
+	FROM product
+	JOIN seller ON product.seller_id = seller.id  
+	WHERE product.id=25;
