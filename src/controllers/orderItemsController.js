@@ -1,5 +1,6 @@
 const orderItemsModel = require("../models/orderItemsModel.js");
 const customerModel = require("../models/customerModel.js");
+const sellerModel = require("../models/sellerModel.js");
 const { response, responseError } = require("../helpers/response.js");
 const cloudinary = require("../helpers/cloudinary.js");
 const { v4: uuidv4 } = require("uuid");
@@ -51,6 +52,28 @@ const orderItemsController = {
 				.selectOrderItemsByCustomerId(customer_id)
 				.then((result) => {
 					return response(res, result.rows, 200, "get order items customer success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error.message);
+				});
+		} catch (error) {
+			return responseError(res, 500, error.message);
+		}
+	},
+
+	getOrderItemsBySellerId: async (req, res) => {
+		try {
+			const seller_id = req.params.seller_id;
+
+			const { rowCount } = await sellerModel.selectSeller(seller_id);
+			if (!rowCount) {
+				return responseError(res, 404, "Seller id is not found");
+			}
+
+			orderItemsModel
+				.selectOrderItemsBySellerId(seller_id)
+				.then((result) => {
+					return response(res, result.rows, 200, "get order items seller success");
 				})
 				.catch((error) => {
 					return responseError(res, 500, error.message);

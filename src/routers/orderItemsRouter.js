@@ -8,6 +8,10 @@ router.get(
 	"/orderitems-customer/:customer_id",
 	orderItemsController.getOrderItemsByCustomerId,
 );
+router.get(
+	"/orderitems-seller/:seller_id",
+	orderItemsController.getOrderItemsBySellerId,
+);
 // router.get("/:id", ordersController.getCategory);
 // router.delete("/:id", ordersController.deleteCategory);
 // router.put("/:id", uploadImage, ordersController.updateCategory);
