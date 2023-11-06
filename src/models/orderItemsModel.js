@@ -9,6 +9,27 @@ const selectAllOrderItems = (limit, offset) => {
 	`);
 };
 
+const selectOrderItemsByCustomerId = (customer_id) => {
+	return db.query(`
+	SELECT
+	customer.name AS customer_name,
+	product.name AS product_name,
+	orders.*,
+	order_items.*
+FROM
+	order_items
+JOIN
+	orders ON orders.order_id = order_items.order_id
+JOIN
+	customer ON  customer.id = orders.customer_id 
+JOIN
+	product ON product.id = order_items.product_id
+WHERE
+	customer.id = ${customer_id};
+	`);
+};
+
+// pending
 const selectOrderItem = (id) => {
 	return db.query(`SELECT * FROM order_Items WHERE id=${id}`);
 };
@@ -39,6 +60,7 @@ const countDataOrderItem = () => {
 
 module.exports = {
 	selectAllOrderItems,
+	selectOrderItemsByCustomerId,
 	// pending
 	selectOrderItem,
 	insertOrderItem,

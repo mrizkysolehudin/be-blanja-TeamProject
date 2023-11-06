@@ -144,3 +144,20 @@ WHERE
 	FROM product
 	JOIN seller ON product.seller_id = seller.id  
 	WHERE product.id=25;
+
+
+SELECT
+	customer.name AS customer_name,
+	product.name AS product_name,
+	orders.*,
+	order_items.*
+FROM
+	order_items
+JOIN
+	orders ON orders.order_id = order_items.order_id
+JOIN
+	customer ON  customer.id = orders.customer_id 
+JOIN
+	product ON product.id = order_items.product_id
+WHERE
+	customer.id = 23; 

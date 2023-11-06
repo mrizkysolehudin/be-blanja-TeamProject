@@ -1,4 +1,5 @@
 const orderItemsModel = require("../models/orderItemsModel.js");
+const customerModel = require("../models/customerModel.js");
 const { response, responseError } = require("../helpers/response.js");
 const cloudinary = require("../helpers/cloudinary.js");
 const { v4: uuidv4 } = require("uuid");
@@ -37,6 +38,28 @@ const orderItemsController = {
 			});
 	},
 
+	getOrderItemsByCustomerId: async (req, res) => {
+		try {
+			const customer_id = req.params.customer_id;
+
+			const { rowCount } = await customerModel.selectCustomer(customer_id);
+			if (!rowCount) {
+				return responseError(res, 404, "Customer id is not found");
+			}
+
+			orderItemsModel
+				.selectOrderItemsByCustomerId(customer_id)
+				.then((result) => {
+					return response(res, result.rows, 200, "get order items customer success");
+				})
+				.catch((error) => {
+					return responseError(res, 500, error.message);
+				});
+		} catch (error) {
+			return responseError(res, 500, error.message);
+		}
+	},
+
 	// pending
 	getOrderItem: async (req, res) => {
 		const id = req.params.id;
@@ -71,52 +94,6 @@ const orderItemsController = {
 			.catch((error) => {
 				return responseError(res, 500, error.message);
 			});
-	},
-
-	createOrderItem: async (req, res) => {
-		try {
-			const uuid = uuidv4();
-			const {
-				order_total,
-				payment_method,
-				address_id,
-				customer_id,
-				seller_id,
-				items,
-			} = req.body;
-
-			let orderData = {
-				order_id: uuid ?? "",
-				order_total: order_total ?? null,
-				payment_method: payment_method ?? "OVO",
-				address_id: address_id ?? 1,
-				customer_id: customer_id ?? 23,
-				seller_id: seller_id ?? 5,
-			};
-
-			for (const item of items) {
-				let orderItemsData = {
-					order_id: uuid ?? "",
-					product_id: item.product_id ?? 0,
-					quantity_unit: item.price_unit ?? 0,
-					price_unit: item.price_unit ?? 0,
-				};
-
-				await orderItemsModel.insertOrderItemItem(orderItemsData);
-			}
-
-			allData = {
-				...orderData,
-				items,
-			};
-
-			const result = await orderItemsModel.insertOrderItem(orderData);
-			if (result?.rowCount > 0) {
-				return response(res, allData, 201, "Create order success");
-			}
-		} catch (error) {
-			return responseError(res, 500, error.message);
-		}
 	},
 
 	updateOrderItem: async (req, res) => {
