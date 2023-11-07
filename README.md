@@ -10,11 +10,11 @@ Blanja is an e-commerce application that sells many items and users can select t
 
 ## Features
 
-- Users can create a store account and a customer account.
-- Users can edit their profile (store or customer).
+- Users can create a seller account and a customer account.
+- Users can edit their profile (seller or customer).
 - Users can browse available products.
-- Store accounts can create product listings for items they are selling.
-- Store accounts can edit and delete products.
+- Seller accounts can create product listings for items they are selling.
+- Seller accounts can edit and delete products.
 
 ## Built with
 
@@ -84,9 +84,9 @@ Start the project
 
 ## Postman
 
-⚡[`API Documentation`]()⚡
+<!-- ⚡[`API Documentation`]()⚡ -->
 
-## Author
+## Authors
 
 💻 [Muchammad Rizky Solehudin](https://github.com/mrizkysolehudin) as Fullstack Developer <br />
 💻 [Putra Prasetya](https://github.com/putrapr) as Frontend Developer <br />

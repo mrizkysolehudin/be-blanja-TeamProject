@@ -67,6 +67,18 @@ CREATE TABLE order_items (
 );
 
 
+CREATE TABLE
+    address (
+        id SERIAL PRIMARY KEY,
+        address_type VARCHAR(255),
+        name VARCHAR(255),
+        phone VARCHAR(20),
+        street VARCHAR(255),
+        gender VARCHAR(255),
+        photo VARCHAR(255),
+        -- date_birth VARCHAR(255)
+    )
+
 INSERT INTO product (
   name,
   image,
