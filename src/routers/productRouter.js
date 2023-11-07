@@ -5,6 +5,7 @@ const { uploadImage } = require("../middlewares/uploadImage.js");
 
 router
 	.get("/", productController.getAllProducts)
+	.get("/category/:category_id", productController.getAllProductsByCategoryId)
 	.get("/:id", productController.getProduct)
 	.delete("/:id", productController.deleteProduct)
 	.post("/", uploadImage, productController.createProduct)

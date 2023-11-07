@@ -34,6 +34,41 @@ const productController = {
 			});
 	},
 
+	getAllProductsByCategoryId: async (req, res) => {
+		const category_id = req.params.category_id;
+
+		let page = parseInt(req.query.page) || 1;
+		let limit = parseInt(req.query.limit) || 10;
+		let offset = (page - 1) * limit;
+
+		const resultCount = await productModel.countDataProduct("");
+		const { count } = resultCount.rows[0];
+
+		const totalData = parseInt(count);
+		const totalPage = Math.ceil(totalData / limit);
+		const pagination = {
+			currentPage: page,
+			limit,
+			totalData,
+			totalPage,
+		};
+
+		productModel
+			.selectAllProductsByCategoryId(category_id, limit, offset)
+			.then((result) => {
+				return response(
+					res,
+					result.rows,
+					200,
+					"Get products by category id success",
+					pagination,
+				);
+			})
+			.catch((error) => {
+				return responseError(res, 500, error.message);
+			});
+	},
+
 	getProduct: async (req, res) => {
 		const id = req.params.id;
 		productModel

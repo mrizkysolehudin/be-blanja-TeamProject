@@ -12,6 +12,17 @@ const selectAllProducts = (search, sort, limit, offset) => {
 	`);
 };
 
+const selectAllProductsByCategoryId = (category_id, limit, offset) => {
+	return db.query(`
+	SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
+	FROM product
+	JOIN seller ON product.seller_id = seller.id
+	WHERE product.category_id=${category_id} 
+	LIMIT ${limit}
+	OFFSET ${offset}; 
+	`);
+};
+
 const selectProduct = (id) => {
 	return db.query(`SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
 	FROM product
@@ -117,6 +128,7 @@ WHERE
 
 module.exports = {
 	selectAllProducts,
+	selectAllProductsByCategoryId,
 	selectProduct,
 	insertProduct,
 	updateProduct,

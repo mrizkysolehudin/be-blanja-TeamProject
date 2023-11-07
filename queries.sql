@@ -178,3 +178,9 @@ JOIN
 	product ON product.id = order_items.product_id
 WHERE
 	orders.seller_id = 5;
+
+
+    SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
+	FROM product
+	JOIN seller ON product.seller_id = seller.id
+	WHERE product.category_id=10;
