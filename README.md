@@ -84,7 +84,7 @@ Start the project
 
 ## Postman
 
-<!-- ⚡[`API Documentation`]()⚡ -->
+⚡[`API Documentation`](https://documenter.getpostman.com/view/23681909/2s9YXh4288)⚡
 
 ## Authors
 

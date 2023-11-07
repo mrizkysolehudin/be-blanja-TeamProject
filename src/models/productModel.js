@@ -14,9 +14,10 @@ const selectAllProducts = (search, sort, limit, offset) => {
 
 const selectAllProductsByCategoryId = (category_id, limit, offset) => {
 	return db.query(`
-	SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role 
+	SELECT product.*, seller.store_name,  seller.name AS seller_name, seller.role, category.id AS category_id, category.name AS category_name 
 	FROM product
-	JOIN seller ON product.seller_id = seller.id
+	JOIN seller ON product.seller_id = seller.id 
+	JOIN category ON category.id = product.category_id  
 	WHERE product.category_id=${category_id} 
 	LIMIT ${limit}
 	OFFSET ${offset}; 
