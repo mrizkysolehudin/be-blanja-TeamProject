@@ -95,7 +95,7 @@ const ordersController = {
 				let orderItemsData = {
 					order_id: uuid ?? "",
 					product_id: item.product_id ?? 0,
-					quantity_unit: item.price_unit ?? 0,
+					quantity_unit: item.quantity_unit ?? 0,
 					price_unit: item.price_unit ?? 0,
 				};
 
