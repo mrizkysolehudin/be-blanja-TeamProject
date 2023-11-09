@@ -115,6 +115,8 @@ const selectProductsUserByUserId = (id) => {
 	product.id,
 	product.name AS product_name,
 	product.image,
+	product.price,
+	product.stock,
 	seller.name AS owner,
 	seller.store_name,
 	TO_CHAR(product.created_at, 'DD-MM-YYYY HH24:MI:SS') AS created_at
